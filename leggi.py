@@ -15,8 +15,8 @@ def read_pass_file(fname):
     return user, pwd
 
 
-def get_calls(user, password):
-    with Browser('phantomjs') as b:
+def get_calls(user, password, driver='firefox'):
+    with Browser(driver) as b:
         b.visit('https://www.messagenet.com/')
         b.fill('userid', user)
         b.fill('password', password)
@@ -43,5 +43,5 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         conf.update(json.load(open(sys.argv[1])))
     user, password = read_pass_file(conf['credfile'])
-    calls = tuple(get_calls(user, password))
+    calls = tuple(get_calls(user, password, conf['browserdriver']))
     save_calls(calls, conf['datadir'])
