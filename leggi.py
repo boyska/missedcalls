@@ -1,6 +1,7 @@
 import json
 import sys
 from itertools import imap
+import os.path
 
 from splinter import Browser
 
@@ -36,7 +37,9 @@ def save_calls(calls, datadir):
 
 
 if __name__ == '__main__':
-    conf = json.load(open('defaultconf.json'))
+    conf = json.load(open(os.path.join(
+        os.path.dirname(sys.argv[0]),
+        'defaultconf.json')))
     if len(sys.argv) == 2:
         conf.update(json.load(open(sys.argv[1])))
     user, password = read_pass_file(conf['credfile'])
